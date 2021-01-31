@@ -4,14 +4,19 @@ const app = express();
 
 //Home page
 app.get('/', (req, res) => {
-    res.sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/public/doc.html");
+});
+
+//demo page
+app.get('/demo', (req, res) => {
+  res.sendFile(__dirname + "/public/demo.html");
 });
 
 //API route
 app.get('/api/search', (req, res) => {
-    scraper.youtube(req.query.q, req.query.page)
-        .then(x => res.json(x))
-        .catch(e => res.send(e));
+  scraper.youtube(req.query.q, req.query.key, req.query.pageToken)
+    .then(x => res.json(x))
+    .catch(e => res.send(e));
 });
 
 app.listen(process.env.PORT || 8080, function () {
